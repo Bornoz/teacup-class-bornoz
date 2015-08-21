@@ -33,7 +33,9 @@ module.exports = (options) ->
         originalMethods.parseSelector.call teacup, selector
         return
       teacup.classStack[teacup.classStack.length-1] = klass
-      selector += '.' + teacup.classStack.join '-'      
+      selector += '.'
+      for klass in teacup.classStack when klass isnt '_'
+        selector += klass + '-'
       # log 'exit parseSelector', selector, teacup.classStack
-      originalMethods.parseSelector.call teacup, selector
+      originalMethods.parseSelector.call teacup, selector[0..-2]
       
